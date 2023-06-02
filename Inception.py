@@ -1,6 +1,8 @@
 import torch.nn as nn
 
-
+'''
+Paper: `SimVP: Simpler yet Better Video Prediction`
+'''
 class GroupConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride, padding, groups, act_norm=False):
         super(GroupConv2d, self).__init__()
