@@ -2,7 +2,10 @@ import torch
 import torch.nn as nn
 
 
-""" Position attention module"""
+"""
+Position attention module
+Paper: `Dual Attention Network for Scene Segmentation`
+"""
 class PAM_Module(nn.Module):
     #Ref from SAGAN
     def __init__(self, in_dim):

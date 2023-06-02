@@ -2,13 +2,14 @@ import torch
 import torch.nn as nn
 
 
-""" Channel attention module"""
+""" 
+Channel attention module
+Paper: `Dual Attention Network for Scene Segmentation`
+"""
 class CAM_Module(nn.Module):
     def __init__(self, in_dim):
         super(CAM_Module, self).__init__()
         self.chanel_in = in_dim
-
-
         self.gamma = nn.Parameter(torch.zeros(1))
         self.softmax  = nn.Softmax(dim=-1)
     def forward(self,x):
@@ -33,8 +34,10 @@ class CAM_Module(nn.Module):
         out = self.gamma*out + x
         return out
     
-
-## Channel Attention (CA) Layer
+'''
+Channel Attention (CA) Layer
+Paper: `MASA-SR: Matching Acceleration and Spatial Adaptation for Reference-Based Image Super-Resolution`
+'''
 class CALayer(nn.Module):
     def __init__(self, channel, reduction=16):
         super(CALayer, self).__init__()
@@ -58,7 +61,6 @@ def default_conv(in_channels, out_channels, kernel_size, bias=True):
     return nn.Conv2d(
         in_channels, out_channels, kernel_size,
         padding=(kernel_size//2), bias=bias)
-
 
 ## Residual Channel Attention Block (RCAB)
 class RCAB(nn.Module):

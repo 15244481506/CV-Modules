@@ -61,3 +61,24 @@ class ConvGRUCell(nn.Module):
         new_state = out
 
         return out, new_state
+
+
+'''
+Paper: `Deep Animation Video Interpolation in the Wild`
+'''
+class ConvGRU(nn.Module):
+    def __init__(self, hidden_dim=128, input_dim=192+128):
+        super(ConvGRU, self).__init__()
+        self.convz = nn.Conv2d(hidden_dim+input_dim, hidden_dim, 3, padding=1)
+        self.convr = nn.Conv2d(hidden_dim+input_dim, hidden_dim, 3, padding=1)
+        self.convq = nn.Conv2d(hidden_dim+input_dim, hidden_dim, 3, padding=1)
+
+    def forward(self, h, x):
+        hx = torch.cat([h, x], dim=1)
+
+        z = torch.sigmoid(self.convz(hx))
+        r = torch.sigmoid(self.convr(hx))
+        q = torch.tanh(self.convq(torch.cat([r*h, x], dim=1)))
+
+        h = (1-z) * h + z * q
+        return h
