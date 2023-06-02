@@ -1,6 +1,8 @@
 import torch.nn as nn
 
-
+'''
+Paper: `Attentional Feature Fusion`
+'''
 class DAF(nn.Module):
     '''
     直接相加 DirectAddFuse
