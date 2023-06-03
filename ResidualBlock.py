@@ -76,3 +76,30 @@ class ResidualBlock(nn.Module):
             x = self.downsample(x)
 
         return self.relu(x+y)
+
+
+
+class ResBlock(nn.Module):
+    """
+    Basic residual block for SRNTT.
+
+    Parameters
+    ---
+    n_filters : int, optional
+        a number of filters.
+
+    self.n_res_block = nn.Sequential(
+        *[ResBlock(ngf) for _ in range(n_blocks)],
+    )
+    """
+
+    def __init__(self, n_filters=64):
+        super(ResBlock, self).__init__()
+        self.body = nn.Sequential(
+            nn.Conv2d(n_filters, n_filters, 3, 1, 1),
+            nn.ReLU(True),
+            nn.Conv2d(n_filters, n_filters, 3, 1, 1),
+        )
+
+    def forward(self, x):
+        return self.body(x) + x
