@@ -10,11 +10,9 @@ class SEModule(nn.Module):
     def __init__(self, channels, reduction):
         super(SEModule, self).__init__()
         self.avg_pool = nn.AdaptiveAvgPool2d(1)
-        self.fc1 = nn.Conv2d(channels, channels // reduction, kernel_size=1,
-                             padding=0)
+        self.fc1 = nn.Conv2d(channels, channels // reduction, kernel_size=1, padding=0, bias=False)
         self.relu = nn.ReLU(inplace=True)
-        self.fc2 = nn.Conv2d(channels // reduction, channels, kernel_size=1,
-                             padding=0)
+        self.fc2 = nn.Conv2d(channels // reduction, channels, kernel_size=1, padding=0, bias=False)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):

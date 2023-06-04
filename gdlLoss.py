@@ -76,3 +76,29 @@ class GDL(nn.Module):
         gdl_loss = gdl1 + gdl2
         
         return gdl_loss
+
+
+
+class GradientDifferenceLoss(nn.Module):
+
+    def __init__(self, alpha: int = 2):
+        super(GradientDifferenceLoss, self).__init__()
+        self.alpha = alpha
+
+    def forward(self, x: torch.Tensor, y: torch.Tensor):
+        t1 = torch.pow(
+            torch.abs(
+                torch.abs(x[:, :, :, 1:, :] - x[:, :, :, :-1, :])
+                - torch.abs(y[:, :, :, 1:, :] - y[:, :, :, :-1, :])
+            ),
+            self.alpha,
+        )
+        t2 = torch.pow(
+            torch.abs(
+                torch.abs(x[:, :, :, :, :-1] - x[:, :, :, :, 1:])
+                - torch.abs(y[:, :, :, :, :-1] - y[:, :, :, :, 1:])
+            ),
+            self.alpha,
+        )
+        loss = t1 + t2
+        return loss
