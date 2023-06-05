@@ -4,6 +4,7 @@ import math
 import random
 import numpy as np
 import torch
+import shutil
 import cv2
 from torchvision.utils import make_grid
 from datetime import datetime
@@ -90,6 +91,14 @@ def mkdir_and_rename(path):
         print('Path already exists. Rename it to [{:s}]'.format(new_name))
         os.rename(path, new_name)
     os.makedirs(path)
+
+
+def clean_fold(path):
+    if os.path.exists(path):
+        shutil.rmtree(path)
+        os.makedirs(path)
+    else:
+        os.makedirs(path)
 
 
 '''
