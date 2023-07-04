@@ -4,6 +4,9 @@ from imageio.v2 import imread
 import scipy.stats as stats
 
 
+'''
+Paper: `Towards a More Realistic and Detailed Deep-Learning-Based Radar Echo Extrapolation Method`
+'''
 def fft_score(images1, images2, thresh=0):
 
     N, C, H, W = images1.shape
